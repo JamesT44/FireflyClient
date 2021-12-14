@@ -1,0 +1,82 @@
+import React, { useRef, useState } from 'react';
+import { StyleSheet, View } from 'react-native';
+import Swiper from 'react-native-swiper';
+
+import { ContentContainer, Item, PlannerBar } from '_components';
+
+const PlannerScreen = () => {
+  const titles = [
+    'Monday 23rd November 2020',
+    'Tuesday 24th November 2020',
+    'Wednesday 24th November 2020',
+  ];
+  const [plannerBarTitle, setPlannerBarTitle] = useState(titles[0]);
+
+  const swiper = useRef(null);
+  return (
+    <View style={styles.outerContainer}>
+      <PlannerBar
+        onPressPrev={() => {
+          if (swiper.current.state.index > 0) {
+            swiper.current.scrollBy(-1);
+          }
+        }}
+        onPressNext={() => {
+          if (swiper.current.state.index < 2) {
+            swiper.current.scrollBy(1);
+          }
+        }}
+        title={plannerBarTitle}
+      />
+      <Swiper
+        ref={swiper}
+        showsPagination={false}
+        loop={false}
+        onIndexChanged={(index) => {
+          setTimeout(() => {
+            setPlannerBarTitle(titles[index]);
+          }, 0);
+        }}>
+        <View testID="A">
+          <ContentContainer>
+            {/* <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task /> */}
+          </ContentContainer>
+        </View>
+        <View testID="B">
+          <ContentContainer>{/* <Item.Task /> */}</ContentContainer>
+        </View>
+        <View testID="C">
+          <ContentContainer>
+            {/* <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task />
+            <Item.Task /> */}
+          </ContentContainer>
+        </View>
+      </Swiper>
+    </View>
+  );
+};
+
+const styles = StyleSheet.create({
+  outerContainer: { flex: 1 },
+});
+
+export default PlannerScreen;
